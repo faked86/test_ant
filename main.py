@@ -1,4 +1,4 @@
-from matplotlib import image
+from PIL import Image
 
 GRID_X = 1024
 GRID_Y = 1024
@@ -44,7 +44,20 @@ def main():
             ant_pos[0] -= 1
 
     print(black_count)
-    image.imsave("res.png", grid)
+
+    width = len(grid[0])
+    height = len(grid)
+
+    # Создание объекта изображения черно-белого формата
+    img = Image.new("1", (width, height))
+
+    # Установка пикселей изображения на основе данных
+    pixels = img.load()
+    for y in range(height):
+        for x in range(width):
+            pixels[x, y] = grid[y][x]
+
+    img.save("output_image.png")
 
 
 if __name__ == "__main__":
